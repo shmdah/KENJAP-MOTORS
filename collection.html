@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KENJAP | Our Collection</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'luxury-red': '#8a1c1c',
+                        'luxury-black': '#050505',
+                        'glass': 'rgba(255, 255, 255, 0.05)',
+                        'whatsapp-green': '#25D366',
+                    },
+                    fontFamily: {
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'sans': ['"Montserrat"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-white bg-luxury-black antialiased selection:bg-luxury-red selection:text-white">
+
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-black/30 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 md:h-24">
+                <a href="index.html" class="flex-shrink-0">
+                    <span class="font-serif text-xl md:text-2xl tracking-[0.2em] font-bold">KEN<span class="text-luxury-red">JAP</span></span>
+                </a>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="hover:text-luxury-red transition-colors text-sm tracking-widest uppercase">Home</a>
+                        <a href="collection.html" class="text-luxury-red transition-colors text-sm tracking-widest uppercase">Collection</a>
+                        <button onclick="openContactModal()" class="px-6 py-2 border border-white/30 hover:bg-white hover:text-black transition-all duration-300 text-sm tracking-widest uppercase">Contact</button>
+                    </div>
+                </div>
+
+                <div class="-mr-2 flex md:hidden">
+                    <button onclick="toggleMobileMenu()" id="mobile-menu-button" class="text-white hover:text-luxury-red p-4 text-2xl focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 backdrop-blur-xl border-t border-white/10 absolute w-full left-0 top-20 shadow-2xl">
+            <div class="px-6 pt-6 pb-8 space-y-6 flex flex-col text-center">
+                <a href="index.html" onclick="toggleMobileMenu()" class="block text-white hover:text-luxury-red text-lg tracking-widest uppercase py-3 border-b border-white/10">Home</a>
+                <a href="collection.html" onclick="toggleMobileMenu()" class="block text-luxury-red text-lg tracking-widest uppercase py-3 border-b border-white/10">Collection</a>
+                <button onclick="handleMobileContactClick()" class="block w-full text-white hover:text-luxury-red text-lg tracking-widest uppercase py-3">Contact Us</button>
+                <div class="pt-6 mt-auto border-t border-white/10 flex justify-center items-center space-x-8">
+                    <a href="https://www.instagram.com/kenjapmotors/" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/kenjapmotorslimited/" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-white text-2xl transition-colors"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10 pt-24">
+        <section id="inventory" class="min-h-screen py-20 px-4 md:px-10 relative">
+            <div class="max-w-7xl mx-auto mb-20 text-center pt-12">
+                <h2 class="font-serif text-3xl md:text-5xl mb-4">Curated Inventory</h2>
+                <div class="h-1 w-24 bg-luxury-red mx-auto"></div>
+                <p class="text-gray-400 mt-4 font-light text-sm md:text-base">Select vehicles available for immediate viewing.</p>
+            </div>
+
+            <div id="car-grid" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-24 md:gap-y-32 pt-10">
+                <!-- Car cards will be injected here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="mb-6">
+                <a href="index.html" class="font-serif text-2xl font-bold tracking-widest">KEN<span class="text-luxury-red">JAP</span></a>
+                <p class="text-gray-500 text-xs mt-2 uppercase tracking-wide">Nairobi, Kenya</p>
+            </div>
+            <div class="text-gray-600 text-[10px] uppercase tracking-widest">
+                &copy; 2024 KENJAP. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div id="contact-overlay" class="fixed inset-0 z-[100] hidden" aria-labelledby="contact-modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeContactModal()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <div class="relative transform overflow-hidden bg-zinc-900 border border-white/10 text-left shadow-2xl transition-all w-full max-w-2xl rounded-lg p-6 md:p-8">
+                    <button onclick="closeContactModal()" class="absolute top-4 right-4 z-50 text-white hover:text-luxury-red transition-colors bg-black/50 rounded-full p-3 w-12 h-12 flex items-center justify-center active:scale-95">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                    <h2 id="contact-modal-title" class="font-serif text-2xl md:text-3xl text-white mb-6">Our Locations</h2>
+                    <div class="grid md:grid-cols-2 gap-8 text-sm">
+                        <div class="location space-y-2">
+                            <h3 class="font-serif text-xl text-luxury-red mb-3">Nairobi</h3>
+                            <p class="text-gray-300 flex items-start"><i class="fas fa-map-marker-alt w-5 mt-1 mr-2 text-white/50"></i><span>Muthithi Rd, Nairobi<br>Junction of Muthithi Road & Chiromo Lane</span></p>
+                            <p class="pt-2"><a href="tel:+254701779941" class="text-gray-300 hover:text-white transition inline-flex items-center"><i class="fas fa-phone w-5 mr-2 text-white/50"></i>+254 701 779 941</a></p>
+                            <p><a href="mailto:info@kenjap.co.ke" class="text-gray-300 hover:text-white transition inline-flex items-center"><i class="fas fa-envelope w-5 mr-2 text-white/50"></i>info@kenjap.co.ke</a></p>
+                        </div>
+                        <div class="location space-y-2">
+                            <h3 class="font-serif text-xl text-luxury-red mb-3">Nakuru</h3>
+                            <p class="text-gray-300 flex items-start"><i class="fas fa-map-marker-alt w-5 mt-1 mr-2 text-white/50"></i><span>West Road, Adjacent to The Ole-Ken Hotel<br>Next to Mt. Kenya Uni. Nakuru Campus</span></p>
+                            <p class="pt-2"><a href="tel:+254701779941" class="text-gray-300 hover:text-white transition inline-flex items-center"><i class="fas fa-phone w-5 mr-2 text-white/50"></i>+254 701 779 941</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Car Details Modal -->
+    <div id="carModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-end md:items-center justify-center p-0 md:p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden bg-zinc-900 border-t md:border border-white/10 text-left shadow-2xl transition-all w-full h-[90vh] md:h-auto md:max-w-6xl md:rounded-lg flex flex-col md:flex-row">
+                    <button onclick="closeModal()" class="absolute top-4 right-4 z-50 text-white hover:text-luxury-red transition-colors bg-black/50 rounded-full p-3 w-12 h-12 flex items-center justify-center active:scale-95">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                    
+                    <div class="w-full md:w-2/3 bg-black relative flex items-center justify-center group h-[35vh] md:h-[600px]">
+                        <img id="modal-img" src="" alt="Car Detail" class="max-h-full max-w-full object-contain transition-opacity duration-300">
+                        <button onclick="changeSlide(-1)" class="absolute left-2 md:left-4 bg-white/10 hover:bg-white/30 text-white p-4 rounded-full backdrop-blur-md transition-all active:scale-90"><i class="fas fa-chevron-left text-lg"></i></button>
+                        <button onclick="changeSlide(1)" class="absolute right-2 md:right-4 bg-white/10 hover:bg-white/30 text-white p-4 rounded-full backdrop-blur-md transition-all active:scale-90"><i class="fas fa-chevron-right text-lg"></i></button>
+                    </div>
+
+                    <div class="w-full md:w-1/3 p-6 md:p-8 flex flex-col justify-between bg-zinc-900 overflow-y-auto no-scrollbar">
+                        <div>
+                            <p class="text-luxury-red text-xs uppercase tracking-widest font-bold mb-2">Available Now</p>
+                            <h2 id="modal-title" class="font-serif text-2xl md:text-4xl text-white mb-2 leading-none"></h2>
+                            <div class="my-4 md:my-6 border-l-2 border-luxury-red pl-4">
+                                <p id="modal-price-ksh" class="text-lg md:text-2xl font-bold text-white"></p>
+                                <p id="modal-price-usd" class="text-xs text-gray-400"></p>
+                            </div>
+                            
+                            <p id="modal-desc" class="text-gray-400 text-xs md:text-sm leading-relaxed mb-6"></p>
+
+                            <div class="grid grid-cols-4 gap-2 md:gap-4 mb-6 text-center">
+                                <div class="bg-black/40 p-2 rounded border border-white/5">
+                                    <i class="fas fa-calendar text-luxury-red mb-1 block text-sm"></i>
+                                    <p class="text-[8px] text-gray-500 uppercase">Year</p>
+                                    <p id="spec-year" class="text-[10px] md:text-xs font-bold text-white"></p>
+                                </div>
+                                <div class="bg-black/40 p-2 rounded border border-white/5">
+                                    <i class="fas fa-tachometer-alt text-luxury-red mb-1 block text-sm"></i>
+                                    <p class="text-[8px] text-gray-500 uppercase">Mileage</p>
+                                    <p id="spec-mileage" class="text-[10px] md:text-xs font-bold text-white"></p>
+                                </div>
+                                <div class="bg-black/40 p-2 rounded border border-white/5">
+                                    <i class="fas fa-cogs text-luxury-red mb-1 block text-sm"></i>
+                                    <p class="text-[8px] text-gray-500 uppercase">Trans</p>
+                                    <p id="spec-trans" class="text-[10px] md:text-xs font-bold text-white"></p>
+                                </div>
+                                <div class="bg-black/40 p-2 rounded border border-white/5">
+                                    <i class="fas fa-gas-pump text-luxury-red mb-1 block text-sm"></i>
+                                    <p class="text-[8px] text-gray-500 uppercase">Engine</p>
+                                    <p id="spec-engine" class="text-[10px] md:text-xs font-bold text-white"></p>
+                                </div>
+                            </div>
+
+                            <h4 class="text-white text-xs uppercase tracking-wider mb-2 font-semibold">Key Features</h4>
+                            <ul id="modal-features" class="grid grid-cols-2 gap-y-1 gap-x-2 text-[10px] md:text-xs text-gray-400 mb-6"></ul>
+                        </div>
+
+                        <div class="flex flex-col gap-3 mt-auto">
+                            <a id="whatsapp-btn" href="#" target="_blank" class="w-full bg-whatsapp-green text-white py-4 rounded-sm uppercase tracking-widest text-xs font-bold hover:brightness-110 transition-all duration-300 text-center flex items-center justify-center gap-2 active:scale-95 shadow-lg">
+                                <i class="fab fa-whatsapp text-lg"></i> Chat on WhatsApp
+                            </a>
+                            <button class="w-full bg-white text-black py-4 rounded-sm uppercase tracking-widest text-xs font-bold hover:bg-luxury-red hover:text-white transition-colors duration-300 active:scale-95">
+                                Request Call Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Mobile Menu & Contact Modal Logic ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.querySelector('#mobile-menu-button i');
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        }
+
+        const contactOverlay = document.getElementById('contact-overlay');
+        function openContactModal() {
+            if (contactOverlay) {
+                contactOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        function closeContactModal() {
+            if (contactOverlay) {
+                contactOverlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        function handleMobileContactClick() {
+            toggleMobileMenu();
+            setTimeout(openContactModal, 150);
+        }
+
+        // --- Car Data and Grid/Modal Logic ---
+        const cars = [
+            {
+                id: 1,
+                title: "Mercedes-AMG G63",
+                priceKsh: "KSH 38,500,000",
+                priceUsd: "$265,000 USD",
+                desc: "Command the road with the G63. Features the Night Package, 22-inch forged wheels, and diamond-stitched Nappa leather.",
+                cardImage: "images/gwagonhome (2).png",
+                isTransparent: true,
+                images: ["images/GWAGON 1 (1).jpeg", "images/GWAGON 1 (2).jpeg", "images/GWAGON 1 (3).jpeg"],
+                features: ["V8 Biturbo", "Burmester Sound", "360° Cam", "Massage Seats"],
+                specs: { year: "2021", mileage: "3,500 kms", trans: "Automatic", engine: "4.0L V8" }
+            },
+            {
+                id: 4,
+                title: "Mercedes-Benz S63 AMG",
+                priceKsh: "KSH 14,151,450",
+                priceUsd: "$98,500 USD",
+                desc: "The pinnacle of performance luxury. The S63 AMG offers unmatched comfort with earth-shattering power.",
+                cardImage: "images/MBS63HM.png",
+                isTransparent: true, 
+                images: ["images/MBS63 (1).jpg", "images/MBS63 (2).jpg", "images/MBS63 (3).jpg", "images/MBS63 (4).jpg"],
+                features: ["Executive Rear", "Magic Body Control", "Burmester 3D", "Heads-Up Display"],
+                specs: { year: "2019", mileage: "28,000 kms", trans: "Automatic", engine: "4.0L V8" }
+            },
+            {
+                id: 5,
+                title: "VW Arteon R-Line",
+                priceKsh: "KSH 6,278,750",
+                priceUsd: "$43,500 USD",
+                desc: "The avant-garde Gran Turismo. This Arteon R-Line combines a sleek fastback silhouette with dynamic performance.",
+                cardImage: "images/VWSHM.png",
+                isTransparent: true, 
+                images: [ "images/VWS (1).jpg", "images/VWS (2).jpg", "images/VWS (3).jpg", "images/VWS (4).jpg", "images/VWS (5).jpg", "images/VWS (6).jpg", "images/VWS (7).jpg", "images/VWS (8).jpg", "images/VWS (9).jpg" ],
+                features: ["R-Line Styling", "4MOTION", "Digital Cockpit", "Panoramic Roof"],
+                specs: { year: "2021", mileage: "74,200 kms", trans: "Automatic", engine: "2.0L TSI" }
+            },
+            {
+                id: 6,
+                title: "BMW M3 Competition",
+                priceKsh: "KSH 11,400,000",
+                priceUsd: "$79,000 USD",
+                desc: "The icon of sports sedans. The M3 Competition delivers track-ready performance with aggressive styling.",
+                cardImage: "images/BMWM3HM (1).png",
+                isTransparent: true, 
+                images: ["images/BMWM3 (1).jpg", "images/BMWM3 (2).jpg", "images/BMWM3 (3).jpg"],
+                features: ["M xDrive", "Carbon Bucket Seats", "Laser Lights", "Harman Kardon"],
+                specs: { year: "2021", mileage: "15,000 kms", trans: "Automatic", engine: "3.0L I6" }
+            }
+        ];
+
+        const grid = document.getElementById('car-grid');
+        cars.forEach((car, index) => {
+            const div = document.createElement('div');
+            div.className = "group relative mt-16 md:mt-16"; 
+            
+            let imgStyle = "w-full h-44 md:h-48 object-contain drop-shadow-2xl transform scale-100 group-hover:scale-110 transition-transform duration-500";
+            let imgPosition = "-top-16 md:-top-20"; 
+            let containerPadding = "pt-28 md:pt-32";
+
+            div.innerHTML = `
+                <div class="h-full bg-zinc-900/40 backdrop-blur-md border border-white/10 rounded-2xl p-6 ${containerPadding} relative hover:bg-zinc-900/60 hover:border-luxury-red/50 transition-all duration-300">
+                    <div class="absolute ${imgPosition} left-1/2 transform -translate-x-1/2 w-[90%] z-20 transition-transform duration-500 group-hover:-translate-y-4">
+                        <img src="${car.cardImage}" alt="${car.title}" class="${imgStyle}">
+                    </div>
+                    <div class="relative z-10 text-center mt-2">
+                        <p class="text-luxury-red text-[10px] font-bold tracking-[0.2em] uppercase mb-2 md:mb-3">Premium Select</p>
+                        <h3 class="font-serif text-xl md:text-2xl text-white mb-2 leading-none">${car.title}</h3>
+                        <div class="h-0.5 w-12 bg-white/10 mx-auto my-4 md:my-6 group-hover:bg-luxury-red transition-colors"></div>
+                        <div class="flex justify-between items-end border-t border-white/5 pt-4">
+                             <div class="text-left">
+                                <p class="text-gray-500 text-[10px] uppercase tracking-wider">Price</p>
+                                <p class="text-white font-bold text-xs md:text-sm">${car.priceKsh}</p>
+                             </div>
+                             <button onclick="openModal(${index})" class="text-[10px] uppercase font-bold tracking-widest text-white border-b border-white/30 pb-1 hover:text-luxury-red hover:border-luxury-red transition-all">
+                                View Specs
+                             </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(div);
+        });
+
+        let currentIndex = 0;
+        let imgIndex = 0;
+        const modal = document.getElementById('carModal');
+        const modalImg = document.getElementById('modal-img');
+
+        function openModal(idx) {
+            currentIndex = idx;
+            imgIndex = 0;
+            const car = cars[idx];
+            document.getElementById('modal-title').innerText = car.title;
+            document.getElementById('modal-price-ksh').innerText = car.priceKsh;
+            document.getElementById('modal-price-usd').innerText = car.priceUsd;
+            document.getElementById('modal-desc').innerText = car.desc;
+            
+            document.getElementById('spec-year').innerText = car.specs.year;
+            document.getElementById('spec-mileage').innerText = car.specs.mileage;
+            document.getElementById('spec-trans').innerText = car.specs.trans;
+            document.getElementById('spec-engine').innerText = car.specs.engine;
+
+            const waNumber = "254701779941"; 
+            const message = encodeURIComponent(`Hello, I am interested in the ${car.title} listed on your website.`);
+            document.getElementById('whatsapp-btn').href = `https://wa.me/${waNumber}?text=${message}`;
+
+            const feats = document.getElementById('modal-features');
+            feats.innerHTML = '';
+            car.features.forEach(f => {
+                feats.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check text-luxury-red"></i> ${f}</li>`;
+            });
+            updateImage();
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeSlide(dir) {
+            const car = cars[currentIndex];
+            imgIndex += dir;
+            if (imgIndex >= car.images.length) imgIndex = 0;
+            if (imgIndex < 0) imgIndex = car.images.length - 1;
+            updateImage();
+        }
+
+        function updateImage() {
+            modalImg.style.opacity = '0';
+            setTimeout(() => {
+                modalImg.src = cars[currentIndex].images[imgIndex];
+                modalImg.style.opacity = '1';
+            }, 150);
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                if (contactOverlay && !contactOverlay.classList.contains('hidden')) {
+                    closeContactModal();
+                }
+                if (modal && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
